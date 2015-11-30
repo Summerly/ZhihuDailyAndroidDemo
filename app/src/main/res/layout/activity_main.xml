@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/textView"
+        android:id="@+id/linearLayout"
         >
 
         <Button
@@ -35,4 +36,12 @@
             android:id="@+id/buttonTwo"
             android:text="Two"/>
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentContainer"
+        android:layout_below="@id/linearLayout">
+
+    </FrameLayout>
 </RelativeLayout>
