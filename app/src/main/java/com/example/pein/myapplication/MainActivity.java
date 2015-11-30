@@ -5,9 +5,16 @@ import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import com.loopj.android.http.*;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "XiYuexin";
+
+    private Button mButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,5 +36,25 @@ public class MainActivity extends AppCompatActivity {
             int index = savedInstanceState.getInt("index");
             Log.v(TAG, "index: " + index);
         }
+
+        mButton = (Button) findViewById(R.id.httpButton);
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.get("http://www.baidu.com", new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                        Log.v(TAG, "baidu success");
+                    }
+
+                    @Override
+                    public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                        Log.v(TAG, "baidu failure");
+                    }
+                });
+            }
+        });
     }
 }

@@ -19,7 +19,7 @@ public class MyListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 5; i++) {
             String item = "" + i*i;
             tests.add(item);
         }
