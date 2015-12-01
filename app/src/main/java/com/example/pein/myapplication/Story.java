@@ -6,10 +6,12 @@ package com.example.pein.myapplication;
 public class Story {
     private String id;
     private String title;
+    private String images;
 
-    Story(String id, String title) {
+    Story(String id, String title, String images) {
         this.id = id;
         this.title = title;
+        this.images = images;
     }
 
     public void setId(String id) {
@@ -28,8 +30,16 @@ public class Story {
         return this.title;
     }
 
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public String getImages() {
+        return this.images;
+    }
+
     @Override
     public String toString() {
-        return String.format("(%s %s)", this.id, this.title);
+        return String.format("(%s %s %s)", this.id, this.title, this.images);
     }
 }

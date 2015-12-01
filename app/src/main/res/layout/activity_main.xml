@@ -10,13 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.pein.myapplication.MainActivity">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="test"
-        android:id="@+id/httpButton"
-        />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
