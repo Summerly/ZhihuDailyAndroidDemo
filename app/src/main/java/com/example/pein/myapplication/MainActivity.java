@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AsyncHttpClient client = new AsyncHttpClient();
-                client.get("http://www.baidu.com", new AsyncHttpResponseHandler() {
+                client.get("http://news-at.zhihu.com/api/4/news/latest", new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         Log.v(TAG, "baidu success");
