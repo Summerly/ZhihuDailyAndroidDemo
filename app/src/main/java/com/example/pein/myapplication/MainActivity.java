@@ -42,18 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AsyncHttpClient client = new AsyncHttpClient();
-                client.get("http://news-at.zhihu.com/api/4/news/latest", new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                        Log.v(TAG, "baidu success");
-                    }
-
-                    @Override
-                    public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                        Log.v(TAG, "baidu failure");
-                    }
-                });
+                Log.v("hi", "nothing");
             }
         });
     }

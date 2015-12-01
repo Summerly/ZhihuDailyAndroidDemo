@@ -1,6 +1,8 @@
 package com.example.pein.myapplication;
 
 import android.app.ListFragment;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -17,6 +24,7 @@ import java.util.ArrayList;
  */
 public class MyListFragment extends ListFragment {
     private ArrayList<Story> stories = new ArrayList<Story>();
+    private static final String tag_latestURL = "latest";
     private static final String latestURL = "http://news-at.zhihu.com/api/4/news/latest";
     private static final String TAG = "XiYuexin";
 
@@ -31,6 +39,8 @@ public class MyListFragment extends ListFragment {
         StoryAdapter adapter = new StoryAdapter(stories);
 
         setListAdapter(adapter);
+
+        test();
     }
 
     private class StoryAdapter extends ArrayAdapter<Story> {
@@ -68,6 +78,28 @@ public class MyListFragment extends ListFragment {
             stories.add(story);
         }
         Logger.v(String.valueOf(stories));
+    }
+
+    private void test() {
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+
+        StringRequest strReq = new StringRequest(Request.Method.GET, latestURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Logger.v(response);
+                pDialog.hide();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                pDialog.hide();
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(strReq, tag_latestURL);
     }
 }
 
