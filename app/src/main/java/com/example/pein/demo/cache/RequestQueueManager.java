@@ -9,18 +9,24 @@ import com.example.pein.demo.DemoApplication;
  * Created by Pein on 15/12/2.
  */
 public class RequestQueueManager {
-    public static RequestQueue sRequestQueue = Volley.newRequestQueue(DemoApplication.getInstance());
+    private static RequestQueue mRequestQueue;
+
+    public static RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(DemoApplication.getInstance());
+        }
+        return mRequestQueue;
+    }
 
     public static void addRequest(Request<?> request, Object object) {
         if (object != null) {
             request.setTag(object);
         }
-
-        sRequestQueue.add(request);
+        getRequestQueue().add(request);
     }
 
     public static void cancelAll(Object tag) {
-        sRequestQueue.cancelAll(tag);
+        getRequestQueue().cancelAll(tag);
     }
 }
 

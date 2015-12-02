@@ -2,6 +2,9 @@ package com.example.pein.demo.ui.fragment;
 
 import android.app.ListFragment;
 import android.app.ProgressDialog;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.pein.demo.DemoApplication;
 import com.example.pein.demo.R;
 import com.example.pein.demo.bean.Story;
+import com.example.pein.demo.cache.ImageCacheManger;
+import com.example.pein.demo.cache.RequestQueueManager;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
@@ -59,16 +64,14 @@ public class LatestListFragment extends ListFragment {
 
             Story story = stories.get(position);
 
-            ImageLoader imageLoader = DemoApplication.getInstance().getImageLoader();
-
             TextView titleTextView = (TextView)convertView.findViewById(R.id.story_title);
             ImageView imageView = (ImageView)convertView.findViewById(R.id.story_image);
 
             String imageURL = story.getImages();
 
-            Logger.v(imageURL);
-
-            imageLoader.get(imageURL, ImageLoader.getImageListener(imageView, R.drawable.ic_rotate_right_black, R.drawable.ic_tag_faces_black));
+            ImageCacheManger.loadImage(imageURL, imageView,
+                    getBitmapFromResources(R.drawable.ic_rotate_right_black),
+                    getBitmapFromResources(R.drawable.ic_tag_faces_black));
 
             titleTextView.setText(story.getTitle());
 
@@ -95,7 +98,10 @@ public class LatestListFragment extends ListFragment {
                     for (int i=0; i < tempStories.length(); i++) {
                         JSONObject row = tempStories.getJSONObject(i);
                         JSONArray images = row.getJSONArray("images");
-                        Story story = new Story(row.getString("id"), row.getString("title"), (String) images.get(0));
+                        Story story = new Story();
+                        story.setId(row.getString("id"));
+                        story.setTitle(row.getString("title"));
+                        story.setImages(images.getString(0));
                         stories.add(story);
                     }
                 } catch (Exception e) {
@@ -111,7 +117,11 @@ public class LatestListFragment extends ListFragment {
             }
         });
 
-        DemoApplication.getInstance().addToRequestQueue(strReq, tag_latestURL);
+        RequestQueueManager.addRequest(strReq, tag_latestURL);
+    }
+
+    public Bitmap getBitmapFromResources(int resId) {
+        return BitmapFactory.decodeResource(getResources(), resId);
     }
 }
 

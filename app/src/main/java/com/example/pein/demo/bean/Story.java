@@ -14,6 +14,10 @@ public class Story {
         this.images = images;
     }
 
+    public Story() {
+        this("", "", "");
+    }
+
     public void setId(String id) {
         this.id = id;
     }
