@@ -12,13 +12,13 @@ import com.example.pein.myapplication.cache.LruBitmapCache;
 /**
  * Created by Pein on 15/12/1.
  */
-public class AppController extends Application {
-    public static final String TAG = AppController.class.getSimpleName();
+public class DemoApplication extends Application {
+    public static final String TAG = DemoApplication.class.getSimpleName();
 
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
 
-    private static AppController mInstance;
+    private static DemoApplication mInstance;
 
     @Override
     public void onCreate() {
@@ -26,7 +26,7 @@ public class AppController extends Application {
         mInstance = this;
     }
 
-    public static synchronized AppController getInstance() {
+    public static synchronized DemoApplication getInstance() {
         return mInstance;
     }
 

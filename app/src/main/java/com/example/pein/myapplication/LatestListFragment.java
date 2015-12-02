@@ -24,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by Pein on 15/11/30.
  */
-public class MyListFragment extends ListFragment {
+public class LatestListFragment extends ListFragment {
     private ArrayList<Story> stories = new ArrayList<Story>();
     private static final String tag_latestURL = "latest";
     private static final String latestURL = "http://news-at.zhihu.com/api/4/news/latest";
@@ -56,7 +56,7 @@ public class MyListFragment extends ListFragment {
 
             Story story = stories.get(position);
 
-            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+            ImageLoader imageLoader = DemoApplication.getInstance().getImageLoader();
 
             TextView titleTextView = (TextView)convertView.findViewById(R.id.story_title);
             ImageView imageView = (ImageView)convertView.findViewById(R.id.story_image);
@@ -108,7 +108,7 @@ public class MyListFragment extends ListFragment {
             }
         });
 
-        AppController.getInstance().addToRequestQueue(strReq, tag_latestURL);
+        DemoApplication.getInstance().addToRequestQueue(strReq, tag_latestURL);
     }
 }
 
