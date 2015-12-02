@@ -1,4 +1,4 @@
-package com.example.pein.myapplication;
+package com.example.pein.demo.ui.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.example.pein.demo.R;
+import com.example.pein.demo.ui.fragment.LatestListFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ConvenientBanner mConvenientBanner;

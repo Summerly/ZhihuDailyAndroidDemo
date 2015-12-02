@@ -1,4 +1,4 @@
-package com.example.pein.myapplication;
+package com.example.pein.demo.bean;
 
 /**
  * Created by Pein on 15/12/1.
@@ -8,7 +8,7 @@ public class Story {
     private String title;
     private String images;
 
-    Story(String id, String title, String images) {
+    public Story(String id, String title, String images) {
         this.id = id;
         this.title = title;
         this.images = images;

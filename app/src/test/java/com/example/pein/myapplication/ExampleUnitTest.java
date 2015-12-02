@@ -1,4 +1,4 @@
-package com.example.pein.myapplication;
+package com.example.pein.demo;
 
 import org.junit.Test;
 

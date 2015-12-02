@@ -1,4 +1,4 @@
-package com.example.pein.myapplication;
+package com.example.pein.demo;
 
 import android.app.Application;
 import android.text.TextUtils;
@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.example.pein.myapplication.cache.LruBitmapCache;
+import com.example.pein.demo.cache.LruBitmapCache;
 
 /**
  * Created by Pein on 15/12/1.

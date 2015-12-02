@@ -1,4 +1,4 @@
-package com.example.pein.myapplication;
+package com.example.pein.demo.ui.fragment;
 
 import android.app.ListFragment;
 import android.app.ProgressDialog;
@@ -15,6 +15,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
+import com.example.pein.demo.DemoApplication;
+import com.example.pein.demo.R;
+import com.example.pein.demo.bean.Story;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
