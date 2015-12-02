@@ -1,4 +1,4 @@
-package com.example.pein.myapplication;
+package com.example.pein.myapplication.cache;
 
 import android.graphics.Bitmap;
 import android.util.LruCache;

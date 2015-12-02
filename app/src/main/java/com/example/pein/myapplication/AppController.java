@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.orhanobut.logger.Logger;
+import com.example.pein.myapplication.cache.LruBitmapCache;
 
 /**
  * Created by Pein on 15/12/1.
