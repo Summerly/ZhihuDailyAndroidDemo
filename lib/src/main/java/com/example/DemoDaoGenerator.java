@@ -18,9 +18,11 @@ public class DemoDaoGenerator {
         Entity story = schema.addEntity("STORY");
 
         story.addIdProperty();
-        story.addStringProperty("storyId").notNull();
+        story.addStringProperty("storyId");
         story.addStringProperty("title").notNull();
         story.addStringProperty("images");
+        story.addBooleanProperty("topStories").notNull();
+        story.addStringProperty("date");
     }
 
     private static void generateDaoFiles(Schema schema) {

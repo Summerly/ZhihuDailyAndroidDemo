@@ -27,6 +27,8 @@ public class STORYDao extends AbstractDao<STORY, Long> {
         public final static Property StoryId = new Property(1, String.class, "storyId", false, "STORY_ID");
         public final static Property Title = new Property(2, String.class, "title", false, "TITLE");
         public final static Property Images = new Property(3, String.class, "images", false, "IMAGES");
+        public final static Property TopStories = new Property(4, boolean.class, "topStories", false, "TOP_STORIES");
+        public final static Property Date = new Property(5, String.class, "date", false, "DATE");
     };
 
 
@@ -43,9 +45,11 @@ public class STORYDao extends AbstractDao<STORY, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"STORY\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"STORY_ID\" TEXT NOT NULL ," + // 1: storyId
+                "\"STORY_ID\" TEXT," + // 1: storyId
                 "\"TITLE\" TEXT NOT NULL ," + // 2: title
-                "\"IMAGES\" TEXT);"); // 3: images
+                "\"IMAGES\" TEXT," + // 3: images
+                "\"TOP_STORIES\" INTEGER NOT NULL ," + // 4: topStories
+                "\"DATE\" TEXT);"); // 5: date
     }
 
     /** Drops the underlying database table. */
@@ -63,12 +67,22 @@ public class STORYDao extends AbstractDao<STORY, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindString(2, entity.getStoryId());
+ 
+        String storyId = entity.getStoryId();
+        if (storyId != null) {
+            stmt.bindString(2, storyId);
+        }
         stmt.bindString(3, entity.getTitle());
  
         String images = entity.getImages();
         if (images != null) {
             stmt.bindString(4, images);
+        }
+        stmt.bindLong(5, entity.getTopStories() ? 1L: 0L);
+ 
+        String date = entity.getDate();
+        if (date != null) {
+            stmt.bindString(6, date);
         }
     }
 
@@ -83,9 +97,11 @@ public class STORYDao extends AbstractDao<STORY, Long> {
     public STORY readEntity(Cursor cursor, int offset) {
         STORY entity = new STORY( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getString(offset + 1), // storyId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // storyId
             cursor.getString(offset + 2), // title
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // images
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // images
+            cursor.getShort(offset + 4) != 0, // topStories
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // date
         );
         return entity;
     }
@@ -94,9 +110,11 @@ public class STORYDao extends AbstractDao<STORY, Long> {
     @Override
     public void readEntity(Cursor cursor, STORY entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setStoryId(cursor.getString(offset + 1));
+        entity.setStoryId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setTitle(cursor.getString(offset + 2));
         entity.setImages(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTopStories(cursor.getShort(offset + 4) != 0);
+        entity.setDate(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     /** @inheritdoc */

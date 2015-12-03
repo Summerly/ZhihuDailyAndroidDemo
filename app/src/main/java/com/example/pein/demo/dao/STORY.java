@@ -7,11 +7,12 @@ package com.example.pein.demo.dao;
 public class STORY {
 
     private Long id;
-    /** Not-null value. */
     private String storyId;
     /** Not-null value. */
     private String title;
     private String images;
+    private boolean topStories;
+    private String date;
 
     public STORY() {
     }
@@ -20,11 +21,13 @@ public class STORY {
         this.id = id;
     }
 
-    public STORY(Long id, String storyId, String title, String images) {
+    public STORY(Long id, String storyId, String title, String images, boolean topStories, String date) {
         this.id = id;
         this.storyId = storyId;
         this.title = title;
         this.images = images;
+        this.topStories = topStories;
+        this.date = date;
     }
 
     public Long getId() {
@@ -35,12 +38,10 @@ public class STORY {
         this.id = id;
     }
 
-    /** Not-null value. */
     public String getStoryId() {
         return storyId;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setStoryId(String storyId) {
         this.storyId = storyId;
     }
@@ -61,6 +62,22 @@ public class STORY {
 
     public void setImages(String images) {
         this.images = images;
+    }
+
+    public boolean getTopStories() {
+        return topStories;
+    }
+
+    public void setTopStories(boolean topStories) {
+        this.topStories = topStories;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
 }

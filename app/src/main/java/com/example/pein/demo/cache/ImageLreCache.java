@@ -101,8 +101,6 @@ class ImageLreCache extends LruCache<String, Bitmap> implements ImageLoader.Imag
         } else {  
             cachePath = context.getCacheDir().getPath();  
         }
-        Logger.init();
-        Logger.v(cachePath + File.separator + uniqueName);
         return new File(cachePath + File.separator + uniqueName);  
     }  
     
@@ -127,8 +125,6 @@ class ImageLreCache extends LruCache<String, Bitmap> implements ImageLoader.Imag
         } catch (NoSuchAlgorithmException e) {  
             cacheKey = String.valueOf(key.hashCode());  
         }
-        Logger.init();
-        Logger.v(cacheKey);
         return cacheKey;  
     }  
       
