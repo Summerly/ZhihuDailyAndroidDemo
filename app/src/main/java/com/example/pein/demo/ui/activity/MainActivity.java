@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.example.pein.demo.R;
 import com.example.pein.demo.ui.fragment.LatestListFragment;
+import com.orhanobut.logger.Logger;
 
 public class MainActivity extends AppCompatActivity {
     private ConvenientBanner mConvenientBanner;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Logger.init();
 
         mConvenientBanner = (ConvenientBanner)findViewById(R.id.convenientBanner);
 
@@ -30,5 +33,11 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.fragmentContainer, fragment)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Logger.v("onResume");
     }
 }

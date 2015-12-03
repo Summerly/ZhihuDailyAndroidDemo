@@ -2,6 +2,7 @@ package com.example.pein.demo;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -16,6 +17,7 @@ public class DemoApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
+        Stetho.initializeWithDefaults(this);
         TAG = this.getClass().getSimpleName();
         mInstance = this;
     }
