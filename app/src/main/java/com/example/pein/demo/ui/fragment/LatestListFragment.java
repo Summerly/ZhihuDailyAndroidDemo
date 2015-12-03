@@ -47,6 +47,8 @@ public class LatestListFragment extends ListFragment {
 
         StoryAdapter adapter = new StoryAdapter(stories);
         setListAdapter(adapter);
+
+        Logger.v(stories.toString());
     }
 
     private class StoryAdapter extends ArrayAdapter<STORY> {
@@ -73,6 +75,8 @@ public class LatestListFragment extends ListFragment {
                     getBitmapFromResources(R.drawable.ic_tag_faces_black));
 
             titleTextView.setText(story.getTitle());
+
+            Logger.v(story.toString());
 
             return convertView;
         }

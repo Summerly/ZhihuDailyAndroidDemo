@@ -2,6 +2,8 @@ package com.example.pein.demo;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.LeakCanary;
+
 /**
  * Created by Pein on 15/12/1.
  */
@@ -13,6 +15,7 @@ public class DemoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         TAG = this.getClass().getSimpleName();
         mInstance = this;
     }
