@@ -20,6 +20,7 @@ import android.util.LruCache;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.pein.demo.DemoApplication;
 import com.jakewharton.disklrucache.DiskLruCache;
+import com.orhanobut.logger.Logger;
 
 class ImageLreCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
 	
@@ -99,7 +100,9 @@ class ImageLreCache extends LruCache<String, Bitmap> implements ImageLoader.Imag
             cachePath = context.getExternalCacheDir().getPath();  
         } else {  
             cachePath = context.getCacheDir().getPath();  
-        }  
+        }
+        Logger.init();
+        Logger.v(cachePath + File.separator + uniqueName);
         return new File(cachePath + File.separator + uniqueName);  
     }  
     
@@ -123,7 +126,9 @@ class ImageLreCache extends LruCache<String, Bitmap> implements ImageLoader.Imag
             cacheKey = bytesToHexString(mDigest.digest());  
         } catch (NoSuchAlgorithmException e) {  
             cacheKey = String.valueOf(key.hashCode());  
-        }  
+        }
+        Logger.init();
+        Logger.v(cacheKey);
         return cacheKey;  
     }  
       
