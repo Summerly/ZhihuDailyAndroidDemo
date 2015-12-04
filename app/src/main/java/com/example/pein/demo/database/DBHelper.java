@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.pein.demo.dao.DaoMaster;
 import com.example.pein.demo.dao.DaoSession;
+import com.example.pein.demo.dao.NEWSDao;
 import com.example.pein.demo.dao.STORYDao;
 
 import de.greenrobot.dao.async.AsyncSession;
@@ -34,6 +35,10 @@ public class DBHelper {
 
     public STORYDao getSTORYDao() {
         return daoSession.getSTORYDao();
+    }
+
+    public NEWSDao getNEWSDao() {
+        return daoSession.getNEWSDao();
     }
 
     public AsyncSession getAsyncSession() {

@@ -1,13 +1,11 @@
 package com.example.pein.demo.ui.fragment;
 
 import android.app.ListFragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +22,7 @@ import com.example.pein.demo.cache.ImageCacheManger;
 import com.example.pein.demo.dao.STORY;
 import com.example.pein.demo.dao.STORYDao;
 import com.example.pein.demo.database.DBHelper;
-import com.example.pein.demo.ui.activity.NewsActiity;
+import com.example.pein.demo.ui.activity.NewsActivity;
 import com.orhanobut.logger.Logger;
 
 import java.text.SimpleDateFormat;
@@ -54,7 +52,7 @@ public class LatestListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(getActivity(), NewsActiity.class);
+        Intent intent = new Intent(getActivity(), NewsActivity.class);
         intent.putExtra("storyId", stories.get(position-1).getStoryId());
         startActivity(intent);
     }
