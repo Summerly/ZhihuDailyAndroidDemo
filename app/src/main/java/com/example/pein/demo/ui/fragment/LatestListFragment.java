@@ -3,6 +3,7 @@ package com.example.pein.demo.ui.fragment;
 import android.app.ListFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.CBPageAdapter;
@@ -22,6 +24,7 @@ import com.example.pein.demo.cache.ImageCacheManger;
 import com.example.pein.demo.dao.STORY;
 import com.example.pein.demo.dao.STORYDao;
 import com.example.pein.demo.database.DBHelper;
+import com.example.pein.demo.ui.activity.NewsActiity;
 import com.orhanobut.logger.Logger;
 
 import java.text.SimpleDateFormat;
@@ -47,6 +50,13 @@ public class LatestListFragment extends ListFragment {
         StoryAdapter adapter = new StoryAdapter(stories);
         setListAdapter(adapter);
 
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Intent intent = new Intent(getActivity(), NewsActiity.class);
+        intent.putExtra("storyId", stories.get(position-1).getStoryId());
+        startActivity(intent);
     }
 
     private class StoryAdapter extends ArrayAdapter<STORY> {
