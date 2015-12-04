@@ -9,12 +9,13 @@ import de.greenrobot.daogenerator.Schema;
 
 public class DemoDaoGenerator {
     public static void main(String[] args) {
-        Schema schema = new Schema(1, "com.example.pein.demo.dao");
-        createTable(schema);
+        Schema schema = new Schema(2, "com.example.pein.demo.dao");
+        createTableStory(schema);
+        createTableNews(schema);
         generateDaoFiles(schema);
     }
 
-    private static void createTable(Schema schema) {
+    private static void createTableStory(Schema schema) {
         Entity story = schema.addEntity("STORY");
 
         story.addIdProperty();
@@ -24,6 +25,19 @@ public class DemoDaoGenerator {
         story.addBooleanProperty("topStories").notNull();
         story.addStringProperty("date");
     }
+
+    private static void createTableNews(Schema schema) {
+        Entity news = schema.addEntity("NEWS");
+
+        news.addIdProperty();
+        news.addStringProperty("newsId").notNull().unique();
+        news.addStringProperty("image");
+        news.addStringProperty("title");
+        news.addStringProperty("imageSource");
+        news.addStringProperty("body");
+        news.addStringProperty("shareURL");
+    }
+
 
     private static void generateDaoFiles(Schema schema) {
         try {
