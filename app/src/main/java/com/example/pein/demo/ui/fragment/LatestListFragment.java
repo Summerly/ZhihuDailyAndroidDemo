@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.CBPageAdapter;
 import com.bigkoo.convenientbanner.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.OnItemClickListener;
 import com.example.pein.demo.R;
 import com.example.pein.demo.cache.ImageCacheManger;
 import com.example.pein.demo.dao.STORY;
@@ -36,7 +37,7 @@ import java.util.TimeZone;
  */
 public class LatestListFragment extends ListFragment {
     private ArrayList<STORY> stories = new ArrayList<STORY>();
-    private List<String> imageURLS = new ArrayList<String>();
+    private List<String[]> imageURLS = new ArrayList<String[]>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,17 @@ public class LatestListFragment extends ListFragment {
                     public Object createHolder() {
                         return new LocalImageHolderView();
                     }
-                }, imageURLS);
+                }, imageURLS)
+                    .setOnItemClickListener(new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Logger.e(String.valueOf(position));
+                            Intent intent = new Intent(getActivity(), NewsActivity.class);
+                            Logger.e(imageURLS.get(position)[0]);
+                            intent.putExtra("storyId", imageURLS.get(position)[0]);
+                            startActivity(intent);
+                        }
+                    });
             } else {
                 TextView titleTextView = (TextView) convertView.findViewById(R.id.story_title);
                 ImageView imageView = (ImageView) convertView.findViewById(R.id.story_image);
@@ -128,11 +139,11 @@ public class LatestListFragment extends ListFragment {
                 .where(STORYDao.Properties.TopStories.eq(true), STORYDao.Properties.Date.eq(getCurrentDate()))
                 .list();
         for (STORY story : topStories) {
-            imageURLS.add(story.getImages());
+            imageURLS.add(new String[]{String.valueOf(story.getStoryId()), story.getImages()});
         }
     }
 
-    public class LocalImageHolderView implements CBPageAdapter.Holder<String> {
+    public class LocalImageHolderView implements CBPageAdapter.Holder<String[]> {
         private ImageView imageView;
 
         @Override
@@ -143,8 +154,8 @@ public class LatestListFragment extends ListFragment {
         }
 
         @Override
-        public void UpdateUI(Context context, int position, String data) {
-            ImageCacheManger.loadImage(data, imageView,
+        public void UpdateUI(Context context, int position, String[] data) {
+            ImageCacheManger.loadImage(data[1], imageView,
                     getBitmapFromResources(R.drawable.ic_rotate_right_black),
                     getBitmapFromResources(R.drawable.ic_tag_faces_black));
         }
