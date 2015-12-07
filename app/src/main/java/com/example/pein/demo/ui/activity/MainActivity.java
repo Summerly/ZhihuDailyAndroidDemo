@@ -17,6 +17,7 @@ import com.example.pein.demo.cache.RequestQueueManager;
 import com.example.pein.demo.dao.STORY;
 import com.example.pein.demo.dao.STORYDao;
 import com.example.pein.demo.database.DBHelper;
+import com.example.pein.demo.ui.fragment.LatestFragment;
 import com.example.pein.demo.ui.fragment.LatestListFragment;
 import com.orhanobut.logger.Logger;
 
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
         if (fragment == null) {
-            fragment = new LatestListFragment();
+//            fragment = new LatestListFragment();
+            fragment = new LatestFragment();
             fm.beginTransaction()
                     .add(R.id.fragmentContainer, fragment)
                     .commit();

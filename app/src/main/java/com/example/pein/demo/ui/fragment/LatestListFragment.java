@@ -1,11 +1,13 @@
 package com.example.pein.demo.ui.fragment;
 
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +44,12 @@ public class LatestListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Logger.init();
 
         getLatestStoriesFromDB();
 
         StoryAdapter adapter = new StoryAdapter(stories);
         setListAdapter(adapter);
-
     }
 
     @Override
