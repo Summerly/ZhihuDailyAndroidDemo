@@ -75,6 +75,7 @@ public class LatestFragment extends Fragment {
                 frame.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        DemoDatabase.getLatestStories(getActivity());
                         getLatestStoriesFromDB();
                         storyAdapter.notifyDataSetChanged();
                         ptrFrameLayout.refreshComplete();

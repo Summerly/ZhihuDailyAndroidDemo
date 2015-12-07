@@ -13,6 +13,11 @@ public final class Constants {
         public static final String newsURL = "http://news-at.zhihu.com/api/4/news/";
     }
 
+    public static final class TAG {
+        public static final String latestTAG = "latest";
+        public static final String errorTAG = "error";
+    }
+
     public static String getCurrentDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Beijing"));

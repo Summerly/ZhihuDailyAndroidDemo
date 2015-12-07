@@ -3,6 +3,7 @@ package com.example.pein.demo.ui.activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -47,38 +48,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getLatestStories();
-    }
-
-    private void getLatestStories() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-
-        StringRequest strReq = new StringRequest(Request.Method.GET, Constants.URL.latestURL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject object = new JSONObject(response);
-                    String date = object.getString("date");
-
-                    JSONArray topStoriesArray = object.getJSONArray("top_stories");
-                    DemoDatabase.saveStories(getApplicationContext(), topStoriesArray, date, true);
-
-                    JSONArray storiesArray = object.getJSONArray("stories");
-                    DemoDatabase.saveStories(getApplicationContext(), storiesArray, date, false);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                progressDialog.hide();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.v(TAG, "Error:" + error.getMessage());
-                progressDialog.hide();
-            }
-        });
-        RequestQueueManager.addRequest(strReq, STRING_REQUEST_TAG);
+        DemoDatabase.getLatestStories(getApplicationContext());
     }
 }

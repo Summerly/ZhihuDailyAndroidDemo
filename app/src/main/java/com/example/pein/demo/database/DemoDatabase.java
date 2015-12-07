@@ -1,8 +1,15 @@
 package com.example.pein.demo.database;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
 import com.example.pein.demo.Constants;
+import com.example.pein.demo.cache.RequestQueueManager;
 import com.example.pein.demo.dao.STORY;
 import com.example.pein.demo.dao.STORYDao;
 
@@ -30,6 +37,32 @@ public class DemoDatabase {
         return (ArrayList<STORY>) storyDao.queryBuilder()
                 .where(STORYDao.Properties.TopStories.eq(true), STORYDao.Properties.Date.eq(Constants.getCurrentDate()))
                 .list();
+    }
+
+    public static void getLatestStories(final Context context) {
+        StringRequest strReq = new StringRequest(Request.Method.GET, Constants.URL.latestURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String date = object.getString("date");
+
+                    JSONArray topStoriesArray = object.getJSONArray("top_stories");
+                    DemoDatabase.saveStories(context, topStoriesArray, date, true);
+
+                    JSONArray storiesArray = object.getJSONArray("stories");
+                    DemoDatabase.saveStories(context, storiesArray, date, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.v(Constants.TAG.errorTAG, "Error:" + error.getMessage());
+            }
+        });
+        RequestQueueManager.addRequest(strReq, Constants.TAG.latestTAG);
     }
 
     public static void saveStories(Context context, JSONArray storiesArray, String date, boolean isTopStories) {
