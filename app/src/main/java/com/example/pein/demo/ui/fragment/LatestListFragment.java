@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by Pein on 15/11/30.
@@ -155,6 +156,7 @@ public class LatestListFragment extends ListFragment {
 
     public String getCurrentDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Beijing"));
         Date now = new Date();
         String strDate = simpleDateFormat.format(now);
         return strDate;

@@ -114,11 +114,4 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    public String getCurrentDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-        Date now = new Date();
-        String strDate = simpleDateFormat.format(now);
-        return strDate;
-    }
 }
