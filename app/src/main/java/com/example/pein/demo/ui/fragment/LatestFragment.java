@@ -44,9 +44,6 @@ public class LatestFragment extends Fragment {
     private ListView listView;
     private StoryAdapter storyAdapter;
 
-    public LatestFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

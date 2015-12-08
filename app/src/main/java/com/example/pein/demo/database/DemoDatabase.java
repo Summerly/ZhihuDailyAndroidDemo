@@ -31,6 +31,14 @@ public class DemoDatabase {
                 .list();
     }
 
+    public static ArrayList<STORY> getStories(Context context, String date) {
+        STORYDao storyDao = DBHelper.getInstance(context).getSTORYDao();
+
+        return (ArrayList<STORY>) storyDao.queryBuilder()
+                .where(STORYDao.Properties.TopStories.eq(false), STORYDao.Properties.Date.eq(date))
+                .list();
+    }
+
     public static ArrayList<STORY> getTopStories(Context context) {
         STORYDao storyDao = DBHelper.getInstance(context).getSTORYDao();
 

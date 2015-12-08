@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.pein.demo.Constants;
 import com.example.pein.demo.R;
 import com.example.pein.demo.database.DemoDatabase;
+import com.example.pein.demo.ui.fragment.BeforeFragment;
 import com.example.pein.demo.ui.fragment.LatestFragment;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.orhanobut.logger.Logger;
@@ -27,14 +29,29 @@ public class MainActivity extends AppCompatActivity {
 
         Logger.init();
 
+        Intent intent = getIntent();
+        String date = intent.getStringExtra("date");
+
         FragmentManager fm = getFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
-        if (fragment == null) {
-            fragment = new LatestFragment();
-            fm.beginTransaction()
-                    .add(R.id.fragmentContainer, fragment)
-                    .commit();
+        if (date != null && !date.equals(Constants.getTomorrowDate())) {
+            if (fragment == null) {
+                fragment = new BeforeFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("date", date);
+                fragment.setArguments(bundle);
+                fm.beginTransaction()
+                        .add(R.id.fragmentContainer, fragment)
+                        .commit();
+            }
+        } else {
+            if (fragment == null) {
+                fragment = new LatestFragment();
+                fm.beginTransaction()
+                        .add(R.id.fragmentContainer, fragment)
+                        .commit();
+            }
         }
 
         ImageView icon = new ImageView(this);
@@ -42,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         icon.setImageDrawable(drawable);
 
         FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
-                                                .setContentView(icon)
-                                                .build();
+                .setContentView(icon)
+                .build();
 
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
