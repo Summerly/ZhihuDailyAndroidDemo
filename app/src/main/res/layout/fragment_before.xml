@@ -4,11 +4,11 @@
              android:layout_height="match_parent"
              tools:context="com.example.pein.demo.ui.fragment.BeforeFragment">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/before_listview">
+        android:id="@+id/before_recycler_view">
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

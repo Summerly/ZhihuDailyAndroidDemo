@@ -1,31 +1,17 @@
 package com.example.pein.demo.ui.fragment;
 
-
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.bigkoo.convenientbanner.CBViewHolderCreator;
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.OnItemClickListener;
 import com.example.pein.demo.R;
-import com.example.pein.demo.cache.ImageCacheManger;
 import com.example.pein.demo.dao.STORY;
 import com.example.pein.demo.database.DemoDatabase;
-import com.example.pein.demo.ui.activity.NewsActivity;
-import com.example.pein.demo.ui.holder.ImageHolderView;
-import com.orhanobut.logger.Logger;
+import com.example.pein.demo.ui.adapter.MultipleItemAdapter;
 
 import java.util.ArrayList;
 
@@ -41,8 +27,8 @@ public class LatestFragment extends Fragment {
     private ArrayList<STORY> stories = new ArrayList<STORY>();
     private ArrayList<STORY> topStories = new ArrayList<STORY>();
     private PtrFrameLayout ptrFrameLayout;
-    private ListView listView;
-    private StoryAdapter storyAdapter;
+    private RecyclerView recyclerView;
+    private MultipleItemAdapter multipleItemAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,25 +60,18 @@ public class LatestFragment extends Fragment {
                     public void run() {
                         DemoDatabase.getLatestStories(getActivity());
                         getLatestStoriesFromDB();
-                        storyAdapter.notifyDataSetChanged();
+                        multipleItemAdapter.notifyDataSetChanged();
                         ptrFrameLayout.refreshComplete();
                     }
                 }, 1800);
             }
         });
 
-        listView = (ListView) view.findViewById(R.id.listView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.latest_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        storyAdapter = new StoryAdapter(stories);
-        listView.setAdapter(storyAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), NewsActivity.class);
-                intent.putExtra("storyId", stories.get(position - 1).getStoryId());
-                startActivity(intent);
-            }
-        });
+        multipleItemAdapter = new MultipleItemAdapter(getActivity(), stories, topStories);
+        recyclerView.setAdapter(multipleItemAdapter);
 
         return view;
     }
@@ -100,77 +79,5 @@ public class LatestFragment extends Fragment {
     private void getLatestStoriesFromDB() {
         stories = DemoDatabase.getStories(getActivity());
         topStories = DemoDatabase.getTopStories(getActivity());
-    }
-
-    public Bitmap getBitmapFromResources(int resId) {
-        return BitmapFactory.decodeResource(getResources(), resId);
-    }
-
-    private class StoryAdapter extends ArrayAdapter<STORY> {
-        public StoryAdapter(ArrayList<STORY> stories) {
-            super(getActivity(), 0, stories);
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return position == 0 ? 0 : 1;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return 2;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-
-                LayoutInflater mInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                if (getItemViewType(position) == 0) {
-                    convertView = mInflater.inflate(R.layout.fragment_convenient_banner, null);
-                } else {
-                    convertView = mInflater.inflate(R.layout.fragment_item, null);
-                }
-            }
-
-            if (getItemViewType(position) == 0) {
-                ConvenientBanner convenientBanner = (ConvenientBanner) convertView.findViewById(R.id.convenientBanner);
-                convenientBanner.setPages(new CBViewHolderCreator() {
-                    @Override
-                    public Object createHolder() {
-                        return new ImageHolderView(getResources());
-                    }
-                }, topStories)
-                        .setOnItemClickListener(new OnItemClickListener() {
-                            @Override
-                            public void onItemClick(int position) {
-                                Intent intent = new Intent(getActivity(), NewsActivity.class);
-                                intent.putExtra("storyId", topStories.get(position).getStoryId());
-                                startActivity(intent);
-                            }
-                        });
-            } else {
-                TextView titleTextView = (TextView) convertView.findViewById(R.id.story_title);
-                ImageView imageView = (ImageView) convertView.findViewById(R.id.story_image);
-
-                STORY story = stories.get(position - 1);
-
-                String imageURL = story.getImages();
-
-                ImageCacheManger.loadImage(imageURL, imageView,
-                        getBitmapFromResources(R.drawable.ic_rotate_right_black),
-                        getBitmapFromResources(R.drawable.ic_tag_faces_black));
-
-                titleTextView.setText(story.getTitle());
-
-            }
-            return convertView;
-        }
-
-        @Override
-        public int getCount() {
-            return 1 + stories.size();
-        }
     }
 }
