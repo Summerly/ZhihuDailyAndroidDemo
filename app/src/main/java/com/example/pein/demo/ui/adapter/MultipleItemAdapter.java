@@ -64,8 +64,7 @@ public class MultipleItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (holder instanceof NormalViewHolder) {
             ((NormalViewHolder) holder).textView.setText(stories.get(position - 1).getTitle());
             ImageCacheManger.loadImage(stories.get(position - 1).getImages(), ((NormalViewHolder) holder).imageView,
-                    getBitmapFromResources(R.drawable.ic_rotate_right_black),
-                    getBitmapFromResources(R.drawable.ic_tag_faces_black));
+                    R.drawable.ic_rotate_right_black, R.drawable.ic_tag_faces_black);
         }
     }
 
@@ -122,9 +121,5 @@ public class MultipleItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             });
         }
-    }
-
-    public Bitmap getBitmapFromResources(int resId) {
-        return BitmapFactory.decodeResource(context.getResources(), resId);
     }
 }

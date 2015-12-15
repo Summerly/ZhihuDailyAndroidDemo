@@ -15,7 +15,7 @@ import com.example.pein.demo.dao.STORY;
 /**
  * Created by Pein on 15/12/7.
  */
-public class ImageHolderView implements CBPageAdapter.Holder<STORY>{
+public class ImageHolderView implements CBPageAdapter.Holder<STORY> {
     private ImageView imageView;
     private Resources resources;
 
@@ -33,11 +33,6 @@ public class ImageHolderView implements CBPageAdapter.Holder<STORY>{
     @Override
     public void UpdateUI(Context context, int position, STORY data) {
         ImageCacheManger.loadImage(data.getImages(), imageView,
-                getBitmapFromResources(R.drawable.ic_rotate_right_black),
-                getBitmapFromResources(R.drawable.ic_tag_faces_black));
-    }
-
-    private Bitmap getBitmapFromResources(int resId) {
-        return BitmapFactory.decodeResource(resources, resId);
+                R.drawable.ic_rotate_right_black, R.drawable.ic_tag_faces_black);
     }
 }

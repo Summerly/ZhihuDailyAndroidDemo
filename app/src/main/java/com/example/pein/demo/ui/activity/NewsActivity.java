@@ -39,7 +39,7 @@ public class NewsActivity extends AppCompatActivity {
 
         Logger.init();
 
-        webView = (WebView)findViewById(R.id.webView);
+        webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());
 
         NEWS news = loadNewsFromDB(storyId);
@@ -83,7 +83,7 @@ public class NewsActivity extends AppCompatActivity {
         try {
             NEWSDao newsDao = DBHelper.getInstance(this).getNEWSDao();
             List<NEWS> newsList = newsDao.queryBuilder().where(NEWSDao.Properties.NewsId.eq(storyId)).list();
-            if(newsList.isEmpty()) {
+            if (newsList.isEmpty()) {
                 NEWS news = new NEWS();
                 news.setNewsId(storyId);
                 news.setImage(object.getString("image"));

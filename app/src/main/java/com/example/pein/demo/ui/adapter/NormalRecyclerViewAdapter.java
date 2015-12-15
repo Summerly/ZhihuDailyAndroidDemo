@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.example.pein.demo.R;
 import com.example.pein.demo.cache.ImageCacheManger;
 import com.example.pein.demo.dao.STORY;
@@ -40,8 +41,7 @@ public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecycl
     public void onBindViewHolder(NormalViewHolder holder, int position) {
         holder.textView.setText(stories.get(position).getTitle());
         ImageCacheManger.loadImage(stories.get(position).getImages(), holder.imageView,
-                getBitmapFromResources(R.drawable.ic_rotate_right_black),
-                getBitmapFromResources(R.drawable.ic_tag_faces_black));
+                R.drawable.ic_rotate_right_black, R.drawable.ic_tag_faces_black);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecycl
         return stories.size();
     }
 
-    public static class NormalViewHolder  extends RecyclerView.ViewHolder {
+    public static class NormalViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
         private ImageView imageView;
 
@@ -68,9 +68,5 @@ public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecycl
                 }
             });
         }
-    }
-
-    public Bitmap getBitmapFromResources(int resId) {
-        return BitmapFactory.decodeResource(context.getResources(), resId);
     }
 }
