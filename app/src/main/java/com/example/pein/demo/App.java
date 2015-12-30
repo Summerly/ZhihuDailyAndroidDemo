@@ -8,10 +8,10 @@ import com.squareup.leakcanary.LeakCanary;
 /**
  * Created by Pein on 15/12/1.
  */
-public class DemoApplication extends Application {
+public class App extends Application {
     public static String TAG;
 
-    private static DemoApplication mInstance;
+    private static App mInstance;
 
     @Override
     public void onCreate() {
@@ -22,7 +22,7 @@ public class DemoApplication extends Application {
         mInstance = this;
     }
 
-    public static synchronized DemoApplication getInstance() {
+    public static synchronized App getInstance() {
         return mInstance;
     }
 }

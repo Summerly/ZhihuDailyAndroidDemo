@@ -18,9 +18,8 @@ import android.os.Environment;
 import android.util.LruCache;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.example.pein.demo.DemoApplication;
+import com.example.pein.demo.App;
 import com.jakewharton.disklrucache.DiskLruCache;
-import com.orhanobut.logger.Logger;
 
 class ImageLreCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
 
@@ -33,8 +32,8 @@ class ImageLreCache extends LruCache<String, Bitmap> implements ImageLoader.Imag
         CACHE_FOLDER_NAME = diskCacheFodler;
         DISK_CACHE_SIZE = diskCacheSize;
         try {
-            mDiskLruCache = DiskLruCache.open(getDiskCacheDir(DemoApplication.getInstance(), CACHE_FOLDER_NAME),
-                    getAppVersion(DemoApplication.getInstance()), 1, DISK_CACHE_SIZE);
+            mDiskLruCache = DiskLruCache.open(getDiskCacheDir(App.getInstance(), CACHE_FOLDER_NAME),
+                    getAppVersion(App.getInstance()), 1, DISK_CACHE_SIZE);
         } catch (IOException e) {
             e.printStackTrace();
         }

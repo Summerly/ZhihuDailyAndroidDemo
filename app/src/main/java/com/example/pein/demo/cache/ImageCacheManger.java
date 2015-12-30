@@ -7,12 +7,12 @@ import android.widget.ImageView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.example.pein.demo.DemoApplication;
+import com.example.pein.demo.App;
 
 public class ImageCacheManger {
 
     // 取运行内存阈值的1/8作为图片缓存
-    private static final int MEM_CACHE_SIZE = 1024 * 1024 * ((ActivityManager) DemoApplication.getInstance()
+    private static final int MEM_CACHE_SIZE = 1024 * 1024 * ((ActivityManager) App.getInstance()
             .getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass() / 8;
     private static ImageLreCache mImageLreCache = new ImageLreCache(MEM_CACHE_SIZE, "images", 10 * 1024 * 1024);
     public static ImageLoader mImageLoder = new ImageLoader(RequestQueueManager.getRequestQueue(), mImageLreCache);
