@@ -2,14 +2,9 @@ package com.example.pein.demo.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -27,7 +22,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class NewsActivity extends AppCompatActivity {
+public class NewsActivity extends BaseActivity {
     private WebView webView;
 
     @Override
@@ -36,8 +31,6 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_actiity);
         Intent intent = getIntent();
         String storyId = intent.getStringExtra("storyId");
-
-        Logger.init();
 
         webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());

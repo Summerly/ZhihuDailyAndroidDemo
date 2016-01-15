@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.example.pein.demo.Constants;
+import com.example.pein.demo.TimeUtils;
 import com.example.pein.demo.ui.adapter.NormalRecyclerViewAdapter;
 import com.example.pein.demo.R;
 import com.example.pein.demo.cache.RequestQueueManager;
@@ -31,9 +33,12 @@ import java.util.ArrayList;
 import rx.Observable;
 
 import rx.Observer;
+import rx.Scheduler;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class BeforeFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -43,8 +48,6 @@ public class BeforeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_before, container, false);
-
-        Logger.init();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.before_recycler_view);
 
@@ -65,7 +68,10 @@ public class BeforeFragment extends Fragment {
 
     private void getStories() {
         String date = getArguments().getString("date");
-        stories = DemoDatabase.getStories(getActivity(), date);
+
+        String tomorrowDate = TimeUtils.getTomorrowDate(date);
+
+        stories = DemoDatabase.getStories(getActivity(), tomorrowDate);
 
         if (stories.isEmpty()) {
             final ProgressDialog _progressDialog = new ProgressDialog(getActivity());
@@ -100,36 +106,33 @@ public class BeforeFragment extends Fragment {
     }
 
     private void tryRxAndroid() {
-        Logger.e("tryRxAndroid");
-
         Observable
                 .create(new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
                         subscriber.onNext(getArguments().getString("date"));
-                        Logger.e("subscriber onNext");
                         subscriber.onCompleted();
                     }
                 })
+                .subscribeOn(Schedulers.io())
                 .map(new Func1<String, ArrayList<STORY>>() {
                     @Override
                     public ArrayList<STORY> call(String s) {
                         ArrayList<STORY> tempStories = DemoDatabase.getStories(getActivity(), s);
-                        Logger.e(tempStories.toString());
                         return tempStories;
                     }
                 })
-                .isEmpty()
-                .doOnNext(new Action1<Boolean>() {
+                .map(new Func1<ArrayList<STORY>, Boolean>() {
                     @Override
-                    public void call(Boolean aBoolean) {
-                        Logger.e("doOnNext isEmpty");
+                    public Boolean call(ArrayList<STORY> stories) {
+                        return stories.isEmpty();
                     }
                 })
-                .subscribe(new Observer<Boolean>() {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {
-                        Logger.e("Observer onCompleted");
+
                     }
 
                     @Override
@@ -139,7 +142,7 @@ public class BeforeFragment extends Fragment {
 
                     @Override
                     public void onNext(Boolean aBoolean) {
-                        Logger.e("Observer onNext");
+
                     }
                 })
         ;

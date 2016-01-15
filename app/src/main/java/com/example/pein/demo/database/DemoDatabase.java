@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.example.pein.demo.Constants;
+import com.example.pein.demo.TimeUtils;
 import com.example.pein.demo.cache.RequestQueueManager;
 import com.example.pein.demo.dao.STORY;
 import com.example.pein.demo.dao.STORYDao;
@@ -16,6 +17,7 @@ import com.example.pein.demo.dao.STORYDao;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class DemoDatabase {
         STORYDao storyDao = DBHelper.getInstance(context).getSTORYDao();
 
         return (ArrayList<STORY>) storyDao.queryBuilder()
-                .where(STORYDao.Properties.TopStories.eq(false), STORYDao.Properties.Date.eq(Constants.getCurrentDate()))
+                .where(STORYDao.Properties.TopStories.eq(false), STORYDao.Properties.Date.eq(TimeUtils.getCurrentDate()))
                 .list();
     }
 
@@ -43,7 +45,7 @@ public class DemoDatabase {
         STORYDao storyDao = DBHelper.getInstance(context).getSTORYDao();
 
         return (ArrayList<STORY>) storyDao.queryBuilder()
-                .where(STORYDao.Properties.TopStories.eq(true), STORYDao.Properties.Date.eq(Constants.getCurrentDate()))
+                .where(STORYDao.Properties.TopStories.eq(true), STORYDao.Properties.Date.eq(TimeUtils.getCurrentDate()))
                 .list();
     }
 
